@@ -135,10 +135,10 @@ function removeLocalTodos(todo) {
   } else {
     todos = JSON.parse(localStorage.getItem("todos"));
   }
-  const item = todo.childNodes[0].innerText;
-  const index = todos.indexOf(item);
-  if (index > -1) {
-    todos.splice(index, 1);
-  }
-  localStorage.setItem("todos", JSON.stringify(todos));
+  const task = todo.childNodes[0].innerText;
+ 
+  const results = todos.filter(obj => {
+    return obj.task !== task
+  })
+  localStorage.setItem("todos", JSON.stringify(results));
 }
