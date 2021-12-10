@@ -100,7 +100,7 @@ function saveLocal(todo) {
     todos = JSON.parse(localStorage.getItem("todos"));
   }
   todos.push({task: todo, completed: 0});
-  localStorage.setItem("todos", JSON.stringify(todos));
+  updateLocalStorage(todos);
 }
 
 function getTodos() {
@@ -147,7 +147,7 @@ function removeLocalTodos(todo) {
   const results = todos.filter(obj => {
     return obj.task !== task
   })
-  localStorage.setItem("todos", JSON.stringify(results));
+  updateLocalStorage(results);
 }
 
 function updateLocalTodos(todo) {
@@ -155,5 +155,5 @@ function updateLocalTodos(todo) {
   const task = todo.childNodes[0].innerText;
   let obj = todos.find(item => item.task == task);
   if (obj){obj.completed = 1}
-  localStorage.setItem("todos", JSON.stringify(todo));
+  updateLocalStorage(todos);
 }
