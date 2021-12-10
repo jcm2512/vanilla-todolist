@@ -99,7 +99,7 @@ function saveLocal(todo) {
   } else {
     todos = JSON.parse(localStorage.getItem("todos"));
   }
-  todos.push({task: todo, completed: 0});
+  todos.push({task: todo, completed: false});
   updateLocalStorage(todos);
 }
 
@@ -110,6 +110,10 @@ function getTodos() {
   } else {
     todos = JSON.parse(localStorage.getItem("todos"));
   }
+  reload(todos)
+}
+
+function reload(todos){
   todos.forEach(function (listItem) {
     // Todo DIV
     const todoDiv = document.createElement("div");
@@ -119,6 +123,11 @@ function getTodos() {
     newTodo.innerText = listItem.task;
     newTodo.classList.add("todo-item");
     todoDiv.appendChild(newTodo);
+
+    // UPDATE CLASSLIST
+    if(listItem.completed){
+      todoDiv.classList.add("completed")
+    }
 
     // CHECK MARK BUTTON
     const completedButton = document.createElement("button");
@@ -154,6 +163,16 @@ function updateLocalTodos(todo) {
   let todos = JSON.parse(localStorage.getItem("todos"));
   const task = todo.childNodes[0].innerText;
   let obj = todos.find(item => item.task == task);
-  if (obj){obj.completed = 1}
+  if (obj){obj.completed = !obj.completed}
+  todos = sortLocalStorage(todos)
   updateLocalStorage(todos);
+  todoList.innerHTML = ""
+  reload(todos)
+}
+
+function sortLocalStorage(todos) {
+  let complete = todos.filter(obj => obj.completed == true);
+  let incomplete = todos.filter(obj => obj.completed == false);
+  let result = incomplete.concat(complete)
+  return result
 }
