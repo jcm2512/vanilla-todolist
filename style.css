@@ -128,7 +128,7 @@ select {
   appearance: none;
   outline: none;
   border: none;
-  color: black
+  color: black;
   width: 16rem;
   cursor: pointer;
 }
