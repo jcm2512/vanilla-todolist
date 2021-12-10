@@ -21,6 +21,12 @@ function updateLocalStorage(value){
 function addTodo(event) {
   // Prevent form from submitting
   event.preventDefault();
+
+  // Prevent empty todos being added
+  if (!/\S/.test(todoInput.value)) {
+    return null;
+  }
+
   // Todo DIV
   const todoDiv = document.createElement("div");
   todoDiv.classList.add("todo");
