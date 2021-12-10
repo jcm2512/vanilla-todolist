@@ -11,6 +11,12 @@ todoList.addEventListener("click", deleteCheck);
 filterOption.addEventListener("click", filterTodo);
 
 // Functions
+
+// UPDATE LOCALSTORAGE VALUES
+function updateLocalStorage(value){
+  localStorage.setItem("todos", JSON.stringify(value));
+}
+
 // ADD TODO
 function addTodo(event) {
   // Prevent form from submitting
@@ -56,6 +62,7 @@ function deleteCheck(event) {
   // CHECK MARK
   if (trigger.classList[0] === "complete-btn") {
     todo.classList.toggle("completed");
+    updateLocalTodos(todo)
   }
 }
 
@@ -141,4 +148,12 @@ function removeLocalTodos(todo) {
     return obj.task !== task
   })
   localStorage.setItem("todos", JSON.stringify(results));
+}
+
+function updateLocalTodos(todo) {
+  let todos = JSON.parse(localStorage.getItem("todos"));
+  const task = todo.childNodes[0].innerText;
+  let obj = todos.find(item => item.task == task);
+  if (obj){obj.completed = 1}
+  localStorage.setItem("todos", JSON.stringify(todo));
 }
