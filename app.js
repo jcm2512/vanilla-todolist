@@ -42,10 +42,10 @@ function addTodo(event) {
 }
 
 function deleteCheck(event) {
-  const item = event.target;
-  const todo = item.parentElement;
+  const trigger = event.target;
+  const todo = trigger.parentElement;
   // DELETE TODO
-  if (item.classList[0] === "trash-btn") {
+  if (trigger.classList[0] === "trash-btn") {
     // animation
     todo.classList.add("trash");
     removeLocalTodos(todo);
@@ -54,7 +54,7 @@ function deleteCheck(event) {
     });
   }
   // CHECK MARK
-  if (item.classList[0] === "complete-btn") {
+  if (trigger.classList[0] === "complete-btn") {
     todo.classList.toggle("completed");
   }
 }
@@ -92,7 +92,7 @@ function saveLocal(todo) {
   } else {
     todos = JSON.parse(localStorage.getItem("todos"));
   }
-  todos.push(todo);
+  todos.push({task: todo, completed: 0});
   localStorage.setItem("todos", JSON.stringify(todos));
 }
 
@@ -103,13 +103,13 @@ function getTodos() {
   } else {
     todos = JSON.parse(localStorage.getItem("todos"));
   }
-  todos.forEach(function (todo) {
+  todos.forEach(function (listItem) {
     // Todo DIV
     const todoDiv = document.createElement("div");
     todoDiv.classList.add("todo");
     // Create LI
     const newTodo = document.createElement("li");
-    newTodo.innerText = todo;
+    newTodo.innerText = listItem.task;
     newTodo.classList.add("todo-item");
     todoDiv.appendChild(newTodo);
 
