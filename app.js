@@ -28,29 +28,12 @@ function addTodo(event) {
     return null;
   }
 
-  // Todo DIV
-  const todoDiv = document.createElement("div");
-  todoDiv.classList.add("todo");
-  // Create LI
-  const newTodo = document.createElement("li");
-  newTodo.innerText = todoInput.value;
-  newTodo.classList.add("todo-item");
-  todoDiv.appendChild(newTodo);
 
   // ADD TO LOCAL STORAGE
   saveLocal(todoInput.value);
-  // CHECK MARK BUTTON
-  const completedButton = document.createElement("button");
-  completedButton.innerHTML = '<i class="fas fa-check"></i>';
-  completedButton.classList.add("complete-btn");
-  todoDiv.appendChild(completedButton);
-  // TRASH BUTTON
-  const trashButton = document.createElement("button");
-  trashButton.innerHTML = '<i class="fas fa-trash"></i>';
-  trashButton.classList.add("trash-btn");
-  todoDiv.appendChild(trashButton);
-  // APPEND TO LIST
-  todoList.appendChild(todoDiv);
+
+  // Set Todo List
+  getTodos()
   todoInput.value = "";
 }
 
@@ -117,10 +100,22 @@ function getTodos() {
   } else {
     todos = JSON.parse(localStorage.getItem("todos"));
   }
+  todos = sortLocalStorage(todos)
+  updateLocalStorage(todos);
   reload(todos)
 }
 
+function setList(){
+  let list = [];
+  const todos = localStorage.getItem("todos")
+  if (todos !== null) {
+    list = JSON.parse(todos)
+  }
+  return list
+}
+
 function reload(todos){
+  todoList.innerHTML = ""
   todos.forEach(function (listItem) {
     // Todo DIV
     const todoDiv = document.createElement("div");
@@ -167,13 +162,13 @@ function removeLocalTodos(todo) {
 }
 
 function updateLocalTodos(todo) {
-  let todos = JSON.parse(localStorage.getItem("todos"));
+  let todos = setList()
   const task = todo.childNodes[0].innerText;
   let obj = todos.find(item => item.task == task);
   if (obj){obj.completed = !obj.completed}
   todos = sortLocalStorage(todos)
   updateLocalStorage(todos);
-  todoList.innerHTML = ""
+  
   reload(todos)
 }
 

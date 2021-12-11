@@ -20,16 +20,25 @@
 
 @media screen and (max-width:600px){
   html {
-    font-size: 60%
+    font-size: 60%;
+    height: 100%; 
+    overflow-x: hidden;
+  }
+  footer {
+    display: block;
   }
 }
 
 body {
+  min-height: 100%;
   background-image: linear-gradient(45deg, var(--color-one), var(--color-two));
+  background-attachment: fixed;
   color: rgb(24, 23, 23);
   min-height: 100vh;
   font-family: var(--default-heading);
   font-weight: 700;
+  position: relative;
+  padding-bottom: 5em; /* Gap above footer */
 }
 
 header {
@@ -96,7 +105,7 @@ select {
   position: absolute;
   top: 0;
   right: 0;
-  pointer-events: none;
+  // pointer-events: none;
   transition: var(--default-transition);
 }
 
@@ -118,7 +127,6 @@ select {
   min-width: 30%;
   list-style: none;
   overflow: hidden;
-  padding-bottom: 14rem;
 }
 
 .todo {
