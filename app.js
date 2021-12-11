@@ -89,18 +89,21 @@ function filterTodo(event) {
 function saveLocal(todo) {
   // Check if data exists
   let todos;
-  if (localStorage.getItem("todos") === null) {
+  if (localStorage.getItem("todos") === null | localStorage.getItem("todos") === "[]") {
     todos = [];
+    id = 1;
   } else {
     todos = JSON.parse(localStorage.getItem("todos"));
+    id = todos[todos.length-1].id + 1
   }
-  todos.push({ task: todo, completed: false });
+  
+  todos.push({ task: todo, completed: false, id: id});
   updateLocalStorage(todos);
 }
 
 function getTodos() {
   let todos;
-  if (localStorage.getItem("todos") === null) {
+  if (localStorage.getItem("todos") === null | localStorage.getItem("todos") === "[]") {
     todos = [];
   } else {
     todos = JSON.parse(localStorage.getItem("todos"));
