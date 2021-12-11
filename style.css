@@ -112,7 +112,7 @@ select {
   position: absolute;
   top: 0;
   right: 0;
-  // pointer-events: none;
+  pointer-events: none;
   transition: var(--default-transition);
 }
 
@@ -167,8 +167,7 @@ select {
   background: var(--color-one);
 }
 
-.fa-trash,
-.fa-check {
+i.fas, i.far {
   pointer-events: none;
 }
 

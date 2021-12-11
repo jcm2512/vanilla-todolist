@@ -122,6 +122,10 @@ function setList() {
 function reload(todos) {
   todoList.innerHTML = "";
   todos.forEach(function (listItem) {
+    function markComplete() {
+      todoDiv.classList.add("completed");
+      completedButton.innerHTML = '<i class="far fa-check-square"></i>';
+    }
     // CREATE DIV
     const todoDiv = document.createElement("div");
     todoDiv.classList.add("todo");
@@ -140,7 +144,7 @@ function reload(todos) {
 
     // TRASH BUTTON
     const trashButton = document.createElement("button");
-    trashButton.innerHTML = '<i class="far fa-times"></i>';
+    trashButton.innerHTML = '<i class="fas fa-times"></i>';
     trashButton.classList.add("trash-btn");
     todoDiv.appendChild(trashButton);
 
@@ -152,6 +156,11 @@ function reload(todos) {
       todoDiv.classList.add("completed");
       completedButton.innerHTML = '<i class="far fa-check-square"></i>';
     }
+
+    // UI TRIGGERS
+    let ui = new Hammer(todoDiv)
+    ui.on("swipeleft", function(){updateLocalTodos(todoDiv)})
+    ui.on("swiperight", function(){removeLocalTodos(todoDiv)})
   });
 }
 
@@ -162,17 +171,18 @@ function removeLocalTodos(todo) {
   } else {
     todos = JSON.parse(localStorage.getItem("todos"));
   }
-  const task = todo.childNodes[0].innerText;
+  const task = todo.querySelector(".todo-item").innerText;
 
   const results = todos.filter((obj) => {
     return obj.task !== task;
   });
   updateLocalStorage(results);
+  reload(results)
 }
 
 function updateLocalTodos(todo) {
   let todos = setList();
-  const task = todo.childNodes[0].innerText;
+  const task = todo.querySelector(".todo-item").innerText;
   let obj = todos.find((item) => item.task == task);
   if (obj) {
     obj.completed = !obj.completed;
