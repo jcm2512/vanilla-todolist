@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", getTodos);
 todoButton.addEventListener("click", addTodo);
 todoList.addEventListener("click", deleteCheck);
 filterOption.addEventListener("click", filterTodo);
+filterOption.addEventListener("input", filterTodo); // For mobile
 
 // Functions
 
