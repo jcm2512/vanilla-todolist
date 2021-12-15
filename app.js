@@ -177,8 +177,8 @@ function removeLocalTodos(todo) {
     return String(obj.id) !== todo.id;
   });
 
-  //updateLocalStorage(results);
-  //reload(results)
+  updateLocalStorage(results);
+  reload(results)
 }
 
 function updateLocalTodos(todo) {
