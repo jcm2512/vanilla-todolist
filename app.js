@@ -50,9 +50,7 @@ function deleteCheck(event) {
     // animation
     todo.classList.add("trash");
     removeLocalTodos(todo);
-    todo.addEventListener("transitionend", function () {
-        todo.remove();
-    });
+    
   }
   // CHECK MARK
   if (trigger.classList[0] === "complete-btn") {
@@ -176,9 +174,12 @@ function removeLocalTodos(todo) {
   const results = todos.filter((obj) => {
     return String(obj.id) !== todo.id;
   });
-
-  updateLocalStorage(results);
-  reload(results)
+  todo.addEventListener("transitionend", function () {
+    todo.remove();
+    updateLocalStorage(results);
+    reload(results)
+  });
+  
 }
 
 function updateLocalTodos(todo) {
