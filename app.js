@@ -51,7 +51,7 @@ function deleteCheck(event) {
     todo.classList.add("trash");
     removeLocalTodos(todo);
     todo.addEventListener("transitionend", function () {
-      todo.remove();
+        todo.remove();
     });
   }
   // CHECK MARK
@@ -171,13 +171,14 @@ function removeLocalTodos(todo) {
   } else {
     todos = JSON.parse(localStorage.getItem("todos"));
   }
+
+
   const results = todos.filter((obj) => {
     return String(obj.id) !== todo.id;
   });
 
-  console.log(results)
-  updateLocalStorage(results);
-  reload(results)
+  //updateLocalStorage(results);
+  //reload(results)
 }
 
 function updateLocalTodos(todo) {
