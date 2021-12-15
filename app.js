@@ -125,13 +125,10 @@ function setList() {
 function reload(todos) {
   todoList.innerHTML = "";
   todos.forEach(function (listItem) {
-    function markComplete() {
-      todoDiv.classList.add("completed");
-      completedButton.innerHTML = '<i class="far fa-check-square"></i>';
-    }
     // CREATE DIV
     const todoDiv = document.createElement("div");
     todoDiv.classList.add("todo");
+    todoDiv.id = listItem.id
 
     // CHECK MARK BUTTON
     const completedButton = document.createElement("button");
@@ -174,11 +171,11 @@ function removeLocalTodos(todo) {
   } else {
     todos = JSON.parse(localStorage.getItem("todos"));
   }
-  const task = todo.querySelector(".todo-item").innerText;
-
   const results = todos.filter((obj) => {
-    return obj.task !== task;
+    return String(obj.id) !== todo.id;
   });
+
+  console.log(results)
   updateLocalStorage(results);
   reload(results)
 }
