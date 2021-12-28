@@ -1,17 +1,23 @@
+// Globals
+let todos = getLocalStorage("todos").items;
+let id = getLocalStorage("todos").id;
+
 // Selectors
-const todoInput = document.querySelector(".todo-input");
-const todoButton = document.querySelector(".todo-button");
+const input = document.querySelector(".todo-input");
+const addButton = document.querySelector(".todo-button");
 const todoList = document.querySelector(".todo-list");
 const filterOption = document.querySelector(".filter-todo");
 
 // Event Listeners
-document.addEventListener("DOMContentLoaded", getTodos);
-todoButton.addEventListener("click", addTodo);
-todoList.addEventListener("click", deleteCheck);
+document.addEventListener("DOMContentLoaded", load(todos));
+addButton.addEventListener("click", addTodo);
+todoList.addEventListener("click", itemAction);
 filterOption.addEventListener("click", filterTodo);
 filterOption.addEventListener("input", filterTodo); // For mobile
 
-// Functions
+// Functions //
+
+// Fix height to include menu controls
 function appHeight() {
   const doc = document.documentElement;
   doc.style.setProperty("--app-height", `${window.innerHeight}px`);
@@ -19,49 +25,54 @@ function appHeight() {
 window.addEventListener("resize", appHeight);
 appHeight();
 
-// UPDATE LOCALSTORAGE VALUES
-function updateLocalStorage(value) {
-  localStorage.setItem("todos", JSON.stringify(value));
-}
-
 // ADD TODO
 function addTodo(event) {
-  // Prevent form from submitting
+  // PREVENT DEFAULT FORM SUBMISSION
   event.preventDefault();
 
-  // Prevent empty todos being added
-  if (!/\S/.test(todoInput.value)) {
+  // PREVENT EMPTY STRINGS
+  if (!/\S/.test(input.value)) {
     return null;
   }
 
   // ADD TO LOCAL STORAGE
-  saveLocal(todoInput.value);
+  todos.push({ task: input.value, completed: false, id: id });
+  localStorage.setItem("todos", JSON.stringify(todos));
 
-  // Set Todo List
-  getTodos();
-  todoInput.value = "";
+  // CREATE HTML ELEMENTS
+  load(todos);
+
+  // CLEAR INPUT
+  input.value = "";
 }
 
-function deleteCheck(event) {
-  const trigger = event.target;
-  const todo = trigger.parentElement;
-  // DELETE TODO
-  if (trigger.classList[0] === "trash-btn") {
-    // animation
-    todo.classList.add("trash");
-    removeLocalTodos(todo);
-    
+function getLocalStorage(data) {
+  let array = [];
+  let id = 1;
+  const localdata = localStorage.getItem(data);
+  if (localdata !== null && localdata !== "[]") {
+    array = JSON.parse(localdata);
+    id = array[array.length - 1].id + 1;
   }
-  // CHECK MARK
-  if (trigger.classList[0] === "complete-btn") {
-    todo.classList.toggle("completed");
-    updateLocalTodos(todo);
+  return { items: array, id: id };
+}
+
+function itemAction(event) {
+  const item = event.target.parentElement;
+  // DELETE
+  if (event.target.classList[0] === "trash-btn") {
+    item.classList.add("trash");
+    removeLocalTodos(item);
+  }
+  // CHECK
+  if (event.target.classList[0] === "complete-btn") {
+    item.classList.toggle("completed");
+    markCompleted(item);
   }
 }
 
 function filterTodo(event) {
-  const todos = todoList.childNodes;
-  todos.forEach(function (todo) {
+  todoList.childNodes.forEach(function (todo) {
     switch (event.target.value) {
       case "all":
         todo.style.display = "flex";
@@ -84,49 +95,17 @@ function filterTodo(event) {
   });
 }
 
-function saveLocal(todo) {
-  // Check if data exists
-  let todos;
-  if (localStorage.getItem("todos") === null | localStorage.getItem("todos") === "[]") {
-    todos = [];
-    id = 1;
-  } else {
-    todos = JSON.parse(localStorage.getItem("todos"));
-    id = todos[todos.length-1].id + 1
-  }
-  
-  todos.push({ task: todo, completed: false, id: id});
-  updateLocalStorage(todos);
-}
+function load(todos) {
+  todos = getLocalStorage("todos").items;
+  id = getLocalStorage("todos").id;
+  // todos = sortLocalStorage(todos);
 
-function getTodos() {
-  let todos;
-  if (localStorage.getItem("todos") === null | localStorage.getItem("todos") === "[]") {
-    todos = [];
-  } else {
-    todos = JSON.parse(localStorage.getItem("todos"));
-  }
-  todos = sortLocalStorage(todos);
-  updateLocalStorage(todos);
-  reload(todos);
-}
-
-function setList() {
-  let list = [];
-  const todos = localStorage.getItem("todos");
-  if (todos !== null) {
-    list = JSON.parse(todos);
-  }
-  return list;
-}
-
-function reload(todos) {
   todoList.innerHTML = "";
   todos.forEach(function (listItem) {
     // CREATE DIV
     const todoDiv = document.createElement("div");
     todoDiv.classList.add("todo");
-    todoDiv.id = listItem.id
+    todoDiv.id = listItem.id;
 
     // CHECK MARK BUTTON
     const completedButton = document.createElement("button");
@@ -156,43 +135,36 @@ function reload(todos) {
     }
 
     // UI TRIGGERS
-    let ui = new Hammer(todoDiv)
-    ui.on("swipeleft", function(){updateLocalTodos(todoDiv)})
-    ui.on("swiperight", function(){removeLocalTodos(todoDiv)})
+    let ui = new Hammer(todoDiv);
+    ui.on("swipeleft", function () {
+      markCompleted(todoDiv);
+    });
+    ui.on("swiperight", function () {
+      removeLocalTodos(todoDiv);
+    });
   });
 }
 
 function removeLocalTodos(todo) {
-  let todos;
-  if (localStorage.getItem("todos") === null) {
-    todos = [];
-  } else {
-    todos = JSON.parse(localStorage.getItem("todos"));
-  }
-
-
-  const results = todos.filter((obj) => {
+  todos = todos.filter((obj) => {
     return String(obj.id) !== todo.id;
   });
+
   todo.addEventListener("transitionend", function () {
     todo.remove();
-    updateLocalStorage(results);
-    reload(results)
+    localStorage.setItem("todos", JSON.stringify(todos));
+    load(todos);
   });
-  
 }
 
-function updateLocalTodos(todo) {
-  let todos = setList();
+function markCompleted(todo) {
   const task = todo.querySelector(".todo-item").innerText;
   let obj = todos.find((item) => item.task == task);
   if (obj) {
     obj.completed = !obj.completed;
   }
-  todos = sortLocalStorage(todos);
-  updateLocalStorage(todos);
-
-  reload(todos);
+  localStorage.setItem("todos", JSON.stringify(todos));
+  load(todos);
 }
 
 function sortLocalStorage(todos) {
