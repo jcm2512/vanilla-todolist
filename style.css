@@ -7,10 +7,12 @@
 :root {
   --app-height: 100%;
   /*FoodTruck*/
-  --color-one: #97BFB4;
-  --color-two: #F5EEDC;
-  --color-three: #DD4A48;
-  --color-four: #4F091D;
+  --color01: #97BFB4;
+  --color02: #F5EEDC;
+  --color03: #DD4A48;
+  --color04: #4F091D;
+  --bg-grad: linear-gradient(45deg, var(--color01), var(--color02));
+  --bg-col: var(--color01);
 
   --default-transition: all 0.5s ease;
   --default-title: "Raleway", cursive;
@@ -31,6 +33,25 @@
   }
 }
 
+#ctoggle {
+  background-color: var(--color03);
+  color: var(--color02);
+  font-size: 1.5rem;
+  position: absolute;
+  padding: 5rem 1rem .5rem 1rem;
+  border-radius: 0 0 .75rem .75rem;
+  margin-left: 1rem;
+  transform: translateY(-4.5rem);
+  transition: var(--default-transition);
+  
+}
+
+#ctoggle:hover {
+  transform: translateY(-2.5rem);
+
+  transition: var(--default-transition);
+}
+
 html, body {
   padding: 0;
   margin: 0;
@@ -40,9 +61,10 @@ html, body {
   font-family: var(--default-heading);
   font-weight: 700;
   position: relative;
+  transition: var(--default-transition);
 }
 body {
-  background-image: linear-gradient(45deg, var(--color-one), var(--color-two));
+  background-image: var(--bg-grad);
   background-attachment: fixed;
   color: rgb(24, 23, 23);
   padding-bottom: 5em; /* Gap above footer */
@@ -51,7 +73,8 @@ body {
 header {
   font-family: var(--default-title);
   font-size: 2.5em;
-  color: var(--color-three);
+  color: var(--color03);
+  padding-top:2.5rem;
 }
 
 header,
@@ -76,13 +99,13 @@ select {
 }
 
 form button {
-  color: var(--color-four);
+  color: var(--color04);
   cursor: pointer;
   transition: var(--default-transition);
 }
 
 form button:hover {
-  background: var(--color-four);
+  background: var(--color04);
   color: white;
 }
 
@@ -105,7 +128,7 @@ select {
 .select::after {
   color:white;
   content: "\25BC";
-  background: var(--color-four);
+  background: var(--color04);
   font-size: 1.5rem;
   padding: 1rem;
   padding-bottom: 2rem;
@@ -118,7 +141,7 @@ select {
 
 .select:hover::after {
   background: white;
-  color: var(--color-four);
+  color: var(--color04);
 }
 .input {
   display: grid;
@@ -165,7 +188,7 @@ select {
 
 .trash-btn,
 .complete-btn {
-  background: var(--color-four);
+  background: var(--color04);
   color: white;
   border: none;
   padding: 1rem;
@@ -174,7 +197,7 @@ select {
 }
 
 .complete-btn {
-  background: var(--color-one);
+  background: var(--color01);
 }
 
 i.fas, i.far {
@@ -190,7 +213,7 @@ i.fas, i.far {
 
 footer{
   font-size: 1.4rem;
-  color: var(--color-four);
+  color: var(--color04);
   display: flex;
   justify-content: center;
   align-items: center;
