@@ -14,7 +14,7 @@
   --bg-grad: linear-gradient(45deg, var(--color01), var(--color02));
   --bg-col: var(--color01);
 
-  --default-transition: all 0.5s ease;
+  --default-transition: all 0.3s ease;
   --default-title: "Raleway", cursive;
   --default-heading: "Dosis", sans-serif;
 }

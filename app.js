@@ -146,6 +146,7 @@ function load(todos) {
 }
 
 function removeLocalTodos(todo) {
+
   todos = todos.filter((obj) => {
     return String(obj.id) !== todo.id;
   });
@@ -158,8 +159,7 @@ function removeLocalTodos(todo) {
 }
 
 function markCompleted(todo) {
-  const task = todo.querySelector(".todo-item").innerText;
-  let obj = todos.find((item) => item.task == task);
+  let obj = todos.find((item) => item.id == todo.id);
   if (obj) {
     obj.completed = !obj.completed;
   }
