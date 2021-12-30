@@ -24,11 +24,12 @@
     <title>Simple Todo List</title>
   </head>
   <body>
-    <div id="ctoggle">toggle</div>
-    <header id="header">
-      <h1>Simple Todo</h1>
+    <div id="ctoggle" class="sticky">toggle</div>
+    <header id="header" class="sticky">
+      
+      <h1 id="title">Simple Todo</h1>
     </header>
-
+    <main id="content">
     <form class="input">
       <span>
       <input type="text" class="todo-input" placeholder="add todo" />
@@ -49,7 +50,7 @@
     <div class="todo-container">
       <ul class="todo-list"></ul>
     </div>
-
+  </main>
     <script src="./app.js"></script>
     <script src="./themes.js"></script>
 

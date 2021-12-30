@@ -11,10 +11,10 @@ html {
 :root {
   --app-height: 100%;
   /*FoodTruck*/
-  --color01: #97BFB4;
-  --color02: #F5EEDC;
-  --color03: #DD4A48;
-  --color04: #4F091D;
+  --color01: #97bfb4;
+  --color02: #f5eedc;
+  --color03: #dd4a48;
+  --color04: #4f091d;
   --bg-grad: linear-gradient(45deg, var(--color01), var(--color02));
   --bg-col: var(--color01);
 
@@ -23,10 +23,10 @@ html {
   --default-heading: "Dosis", sans-serif;
 }
 
-@media screen and (max-width:600px){
+@media screen and (max-width: 600px) {
   html {
     font-size: 60%;
-    height: var(--app-height); 
+    height: var(--app-height);
     overflow-x: hidden;
   }
   .todo-list {
@@ -36,55 +36,56 @@ html {
     display: block;
   }
 }
-.backup {
-  font-size: 1.5em;
-  padding-top:0rem;
-}
-.scroll {
-  position: -webkit-sticky; /* Safari */
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  
-}
 
-.scroll-header{
-  font-size: 1.5em;
+header h1 {
+  /* transition: var(--default-transition); */
+  text-align: center;
+  font-family: var(--default-title);
+  font-size: 4.5em;
 }
 
 #ctoggle {
+  transition: var(--default-transition);
   background-color: var(--color03);
   color: var(--color02);
   font-size: 1.5rem;
-  padding: 5rem 1rem .5rem 1rem;
-  border-radius: 0 0 .75rem .75rem;
+  padding: 3rem 1rem 0.5rem 1rem;
+  border-radius: 0 0 0.75rem 0.75rem;
   margin-left: 1rem;
   width: fit-content;
-  transform: translateY(-4.5rem);
-  transition: var(--default-transition);
-
-  position: -webkit-sticky; /* Safari */
-  position: sticky;
-  top: 0;
-  z-index: 1;
+  transform: translateY(-3rem);
+  z-index: 90;
 }
 
 header {
-  text-align: center;
-  font-family: var(--default-title);
-  font-size: 2.5em;
-  color: var(--color03);
   transition: var(--default-transition);
-  padding-bottom: 1em;
+  color: var(--color03);
+  height: fit-content;
+  z-index: 50;
+}
+
+.sticky {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
 }
 
 #ctoggle:hover {
-  transform: translateY(-2.5rem);
-
+  transform: translateY(0rem);
   transition: var(--default-transition);
 }
 
-html, body {
+#content {
+  padding-top: 2em;
+}
+
+.nav {
+  background-color: var(--color02);
+  font-size: 0.5rem;
+}
+
+html,
+body {
   padding: 0;
   margin: 0;
   width: 100%;
@@ -93,20 +94,15 @@ html, body {
   font-family: var(--default-heading);
   font-weight: 700;
   position: relative;
-  transition: var(--default-transition);
 }
 body {
+  font-size: 1rem;
   background-image: var(--bg-grad);
   background-attachment: fixed;
   color: rgb(24, 23, 23);
   padding-bottom: 5em; /* Gap above footer */
 }
 
-
-
-
-
-header,
 form {
   display: flex;
   justify-content: center;
@@ -119,7 +115,7 @@ select {
   --font-size: 2rem;
   padding: 1rem;
   font-size: var(--font-size);
-  height: calc(var(--font-size)*2.5);
+  height: calc(var(--font-size) * 2.5);
   border: none;
   background: white;
   font-family: var(--default-heading);
@@ -129,7 +125,7 @@ select {
 form button {
   color: var(--color04);
   cursor: pointer;
-  transition: var(--default-transition);
+  /* transition: var(--default-transition); */
 }
 
 form button:hover {
@@ -154,7 +150,7 @@ select {
 }
 
 .select::after {
-  color:white;
+  color: white;
   content: "\25BC";
   background: var(--color04);
   font-size: 1.5rem;
@@ -164,7 +160,7 @@ select {
   top: 0;
   right: 0;
   pointer-events: none;
-  transition: var(--default-transition);
+  /* transition: var(--default-transition); */
 }
 
 .select:hover::after {
@@ -187,10 +183,10 @@ select {
 }
 
 .todo {
-  transition: var(--default-transition);
-  overflow:hidden;
+  /* transition: var(--default-transition); */
+  overflow: hidden;
   margin: 0.5rem;
-  height:auto;
+  height: auto;
   max-height: 10rem;
   background: white;
   color: black;
@@ -202,9 +198,9 @@ select {
 }
 
 .trash {
-  padding:0;
-  margin:0;
-  max-height:0;
+  padding: 0;
+  margin: 0;
+  max-height: 0;
   opacity: 0;
   transform: translateX(25rem);
 }
@@ -228,7 +224,8 @@ select {
   background: var(--color01);
 }
 
-i.fas, i.far {
+i.fas,
+i.far {
   pointer-events: none;
 }
 
@@ -237,9 +234,7 @@ i.fas, i.far {
   opacity: 50%;
 }
 
-
-
-footer{
+footer {
   font-size: 1.4rem;
   color: var(--color04);
   display: flex;

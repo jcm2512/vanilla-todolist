@@ -152,12 +152,12 @@ function removeLocalTodos(todo) {
   todos = todos.filter((obj) => {
     return String(obj.id) !== todo.id;
   });
-
+  localStorage.setItem("todos", JSON.stringify(todos));
   todo.addEventListener("transitionend", function () {
     todo.remove();
-    localStorage.setItem("todos", JSON.stringify(todos));
-    load(todos);
+    
   });
+  load(todos);
 }
 
 function markCompleted(todo) {
@@ -181,14 +181,18 @@ window.onload = function(){
   document.getElementsByTagName("html")[0].style.visibility = "visible";
 }
 
+history.scrollRestoration = "manual"
+
+const OFFSET = document.getElementById("header").offsetTop;
+
 window.onscroll = function() {
-  if (document.documentElement.scrollTop > 24) {
-    document.getElementById("header").classList.add("scroll")
-    document.getElementById("header").classList.add("scroll-header")
-    document.getElementById("ctoggle").classList.add("scroll")
-  } else {
-    document.getElementById("header").classList.remove("scroll")
-    document.getElementById("header").classList.remove("scroll-header")
-    document.getElementById("ctoggle").classList.remove("scroll")
+
+console.log(document.documentElement.scrollTop, OFFSET)
+
+  if (document.documentElement.scrollTop > OFFSET + 10) {
+    document.getElementById("header").classList.add("nav")
+  }; 
+  if (document.documentElement.scrollTop < 30  ) {
+    document.getElementById("header").classList.remove("nav")
   }
 }
