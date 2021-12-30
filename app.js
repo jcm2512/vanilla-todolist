@@ -60,11 +60,11 @@ function getLocalStorage(data) {
 }
 
 function itemAction(event) {
-  const item = event.target.parentElement;
+  const item = event.target.parentElement.parentElement;
   // DELETE
   if (event.target.classList[0] === "trash-btn") {
-    item.classList.add("trash");
-    removeLocalTodos(item);
+      item.classList.add("trash");
+     removeLocalTodos(item);
   }
   // CHECK
   if (event.target.classList[0] === "complete-btn") {
@@ -105,9 +105,12 @@ function load(todos) {
   todoList.innerHTML = "";
   todos.forEach(function (listItem) {
     // CREATE DIV
+    const todoSpan = document.createElement("div");
     const todoDiv = document.createElement("div");
     todoDiv.classList.add("todo");
+    todoSpan.classList.add("todo-span");
     todoDiv.id = listItem.id;
+    todoSpan.id = listItem.id;
 
     // CHECK MARK BUTTON
     const completedButton = document.createElement("button");
@@ -128,7 +131,8 @@ function load(todos) {
     todoDiv.appendChild(trashButton);
 
     // APPEND TO LIST
-    todoList.appendChild(todoDiv);
+    todoSpan.appendChild(todoDiv)
+    todoList.appendChild(todoSpan);
 
     // UPDATE CLASSLIST
     if (listItem.completed) {
@@ -153,11 +157,10 @@ function removeLocalTodos(todo) {
     return String(obj.id) !== todo.id;
   });
   localStorage.setItem("todos", JSON.stringify(todos));
+  console.log(todo)
   todo.addEventListener("transitionend", function () {
     todo.remove();
-    
   });
-  load(todos);
 }
 
 function markCompleted(todo) {
