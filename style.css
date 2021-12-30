@@ -36,18 +36,46 @@ html {
     display: block;
   }
 }
+.backup {
+  font-size: 1.5em;
+  padding-top:0rem;
+}
+.scroll {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  
+}
+
+.scroll-header{
+  font-size: 1.5em;
+}
 
 #ctoggle {
   background-color: var(--color03);
   color: var(--color02);
   font-size: 1.5rem;
-  position: absolute;
   padding: 5rem 1rem .5rem 1rem;
   border-radius: 0 0 .75rem .75rem;
   margin-left: 1rem;
+  width: fit-content;
   transform: translateY(-4.5rem);
   transition: var(--default-transition);
-  
+
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+header {
+  text-align: center;
+  font-family: var(--default-title);
+  font-size: 2.5em;
+  color: var(--color03);
+  transition: var(--default-transition);
+  padding-bottom: 1em;
 }
 
 #ctoggle:hover {
@@ -74,16 +102,12 @@ body {
   padding-bottom: 5em; /* Gap above footer */
 }
 
-header {
-  font-family: var(--default-title);
-  font-size: 2.5em;
-  color: var(--color03);
-  padding-top:2.5rem;
-}
+
+
+
 
 header,
 form {
-  min-height: 20vh;
   display: flex;
   justify-content: center;
   align-items: center;

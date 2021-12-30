@@ -180,3 +180,15 @@ function sortLocalStorage(todos) {
 window.onload = function(){
   document.getElementsByTagName("html")[0].style.visibility = "visible";
 }
+
+window.onscroll = function() {
+  if (document.documentElement.scrollTop > 24) {
+    document.getElementById("header").classList.add("scroll")
+    document.getElementById("header").classList.add("scroll-header")
+    document.getElementById("ctoggle").classList.add("scroll")
+  } else {
+    document.getElementById("header").classList.remove("scroll")
+    document.getElementById("header").classList.remove("scroll-header")
+    document.getElementById("ctoggle").classList.remove("scroll")
+  }
+}
