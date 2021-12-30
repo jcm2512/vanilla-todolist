@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+html {
+  visibility: hidden;
+}
+
 :root {
   --app-height: 100%;
   /*FoodTruck*/

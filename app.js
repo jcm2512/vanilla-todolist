@@ -1,3 +1,5 @@
+
+
 // Globals
 let todos = getLocalStorage("todos").items;
 let id = getLocalStorage("todos").id;
@@ -172,4 +174,9 @@ function sortLocalStorage(todos) {
   let incomplete = todos.filter((obj) => obj.completed == false);
   let result = incomplete.concat(complete);
   return result;
+}
+
+
+window.onload = function(){
+  document.getElementsByTagName("html")[0].style.visibility = "visible";
 }
